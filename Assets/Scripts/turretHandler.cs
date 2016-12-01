@@ -40,52 +40,54 @@ public class turretHandler : MonoBehaviour {
 		if (isBullDelayed == true) {//bullet delay timer, once upgrades are added bullet delay will change according to upgrades
 			BulletDelay();
 		}
-		if (Input.GetMouseButton (0) && isBullDelayed == false) {//checking if the bullet is not delayed
-			if (upgradedGun != true) {//checking if gun is upgraded to the 2 barrel config
-				if (barrelEnd != null) {
-					if (wepSelect == 1) { //Firing Rifle weapon
+		if (Time.timeScale != 0) {
+			if (Input.GetMouseButton (0) && isBullDelayed == false) {//checking if the bullet is not delayed
+				if (upgradedGun != true) {//checking if gun is upgraded to the 2 barrel config
+					if (barrelEnd != null) {
+						if (wepSelect == 1) { //Firing Rifle weapon
+							GameObject shot = GameObject.Instantiate (bullet, barrelEnd.position, barrelEnd.rotation) as GameObject;
+							isBullDelayed = true;
+						} else if (wepSelect == 2) { // Firing Shotgun Weapon
+							GameObject shotNeg3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, 25)) as GameObject;
+							GameObject shotNeg2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, 15)) as GameObject;
+							GameObject shotNeg1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, 5)) as GameObject;
+							GameObject shotPos3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, -5)) as GameObject;
+							GameObject shotPos2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, -15)) as GameObject;
+							GameObject shotPos1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, -25)) as GameObject;
+							isBullDelayed = true;
+						} else if (wepSelect == 3) { //Firing Explosive Launcher Weapon
+							GameObject explo = GameObject.Instantiate (explosive, barrelEnd.position, barrelEnd.rotation) as GameObject;
+							isBullDelayed = true;
+						}
+					}
+				} else if (upgradedGun == true) {//if it is a 2 barrel config, it will fire 2 bullets instead
+					if (wepSelect == 1) {//Firing Rifle weapon
 						GameObject shot = GameObject.Instantiate (bullet, barrelEnd.position, barrelEnd.rotation) as GameObject;
+						GameObject shot2 = GameObject.Instantiate (bullet, barrelEnd2.position, barrelEnd2.rotation) as GameObject;
 						isBullDelayed = true;
-					} else if (wepSelect == 2) { // Firing Shotgun Weapon
-						GameObject shotNeg3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, 25)) as GameObject;
-						GameObject shotNeg2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, 15)) as GameObject;
-						GameObject shotNeg1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, 5)) as GameObject;
-						GameObject shotPos3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -5)) as GameObject;
-						GameObject shotPos2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -15)) as GameObject;
-						GameObject shotPos1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -25)) as GameObject;
+					} else if (wepSelect == 2) {// Firing Shotgun Weapon
+						GameObject shotNeg3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, 25)) as GameObject;
+						GameObject shotNeg2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, 15)) as GameObject;
+						GameObject shotNeg1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, 5)) as GameObject;
+						GameObject shotPos3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler (0, 0, -5)) as GameObject;
+						//GameObject shotPos2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -15)) as GameObject;
+						//GameObject shotPos1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -25)) as GameObject;
+
+						//GameObject shot2Neg3 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, 25)) as GameObject;
+						//GameObject shot2Neg2 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, 15)) as GameObject;
+						GameObject shot2Neg1 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler (0, 0, 5)) as GameObject;
+						GameObject shot2Pos3 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler (0, 0, -5)) as GameObject;
+						GameObject shot2Pos2 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler (0, 0, -15)) as GameObject;
+						GameObject shot2Pos1 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler (0, 0, -25)) as GameObject;
 						isBullDelayed = true;
-					} else if (wepSelect == 3) { //Firing Explosive Launcher Weapon
+					} else if (wepSelect == 3) {//Firing Explosive Launcher Weapon
 						GameObject explo = GameObject.Instantiate (explosive, barrelEnd.position, barrelEnd.rotation) as GameObject;
+						GameObject explo2 = GameObject.Instantiate (explosive, barrelEnd2.position, barrelEnd2.rotation) as GameObject;
 						isBullDelayed = true;
 					}
+
+
 				}
-			} else if (upgradedGun == true) {//if it is a 2 barrel config, it will fire 2 bullets instead
-				if (wepSelect == 1) {//Firing Rifle weapon
-					GameObject shot = GameObject.Instantiate (bullet, barrelEnd.position, barrelEnd.rotation) as GameObject;
-					GameObject shot2 = GameObject.Instantiate (bullet, barrelEnd2.position, barrelEnd2.rotation) as GameObject;
-					isBullDelayed = true;
-				} else if (wepSelect == 2) {// Firing Shotgun Weapon
-					GameObject shotNeg3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, 25)) as GameObject;
-					GameObject shotNeg2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, 15)) as GameObject;
-					GameObject shotNeg1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, 5)) as GameObject;
-					GameObject shotPos3 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -5)) as GameObject;
-					//GameObject shotPos2 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -15)) as GameObject;
-					//GameObject shotPos1 = GameObject.Instantiate (bulletShot, barrelEnd.position, barrelEnd.rotation * Quaternion.Euler(0, 0, -25)) as GameObject;
-
-					//GameObject shot2Neg3 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, 25)) as GameObject;
-					//GameObject shot2Neg2 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, 15)) as GameObject;
-					GameObject shot2Neg1 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, 5)) as GameObject;
-					GameObject shot2Pos3 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, -5)) as GameObject;
-					GameObject shot2Pos2 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, -15)) as GameObject;
-					GameObject shot2Pos1 = GameObject.Instantiate (bulletShot, barrelEnd2.position, barrelEnd2.rotation * Quaternion.Euler(0, 0, -25)) as GameObject;
-					isBullDelayed = true;
-				} else if (wepSelect == 3) {//Firing Explosive Launcher Weapon
-					GameObject explo = GameObject.Instantiate (explosive, barrelEnd.position, barrelEnd.rotation) as GameObject;
-					GameObject explo2 = GameObject.Instantiate (explosive, barrelEnd2.position, barrelEnd2.rotation) as GameObject;
-					isBullDelayed = true;
-				}
-
-
 			}
 		}
 		if (Input.GetKey ("1")) { //Switching to weapon 1

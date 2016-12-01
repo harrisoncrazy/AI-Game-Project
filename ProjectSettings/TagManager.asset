@@ -17,6 +17,7 @@ TagManager:
   - LookLoc
   - leftMinionLook
   - rightMinionLook
+  - barbedWire
   layers:
   - Default
   - TransparentFX

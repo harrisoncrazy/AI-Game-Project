@@ -29,6 +29,8 @@ public class lieutenantHandler : MonoBehaviour {
 	public int yVal;
 	private Vector3 wanderPoint;
 
+	private bool slowed = false;
+
 	// Use this for initialization
 	void Start () {
 		lookLocation = GameObject.FindWithTag ("LPos").transform;
@@ -136,6 +138,23 @@ public class lieutenantHandler : MonoBehaviour {
 
 			Destroy (col.gameObject);
 			Destroy (this.gameObject);
+		}
+		else if (col.gameObject.tag == "barbedWire") {
+			if (slowed == false) {
+				if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
+					moveSpeed = moveSpeed / 2;
+					slowed = true;
+				}
+			}
+		}
+	}
+
+	void OnTriggerExit2D (Collider2D col) {
+		if (col.gameObject.tag == "barbedWire") {
+			if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
+				moveSpeed = moveSpeed * 2;
+				slowed = false;
+			}
 		}
 	}
 }

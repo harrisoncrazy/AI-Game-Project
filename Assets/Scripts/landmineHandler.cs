@@ -5,6 +5,8 @@ public class landmineHandler : MonoBehaviour {
 
 	public GameObject explosive;
 
+	public bool prePlace = false;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -16,10 +18,12 @@ public class landmineHandler : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D (Collider2D col) {
-		if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "lieutenantEnemy" || col.gameObject.tag == "bossEnemy") { //if the minion reaches the firing position
-			explosiveBullet shot = ((GameObject)Instantiate (explosive, transform.position, transform.rotation)).GetComponent<explosiveBullet> ();//instanciating enemy bullet
-			shot.explosionTime = 0;
-			Destroy (this.gameObject);
+		if (prePlace == false) {
+			if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "lieutenantEnemy" || col.gameObject.tag == "bossEnemy") { //if the minion reaches the firing position
+				explosiveBullet shot = ((GameObject)Instantiate (explosive, transform.position, transform.rotation)).GetComponent<explosiveBullet> ();//instanciating enemy bullet
+				shot.explosionTime = 0;
+				Destroy (this.gameObject);
+			}
 		}
 	}
 }

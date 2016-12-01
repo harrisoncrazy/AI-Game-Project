@@ -202,6 +202,10 @@ public class bossHandler : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D col) {
 		if (col.gameObject.tag == "Bullet") {
 			healthVal--;
+		} else if (col.gameObject.tag == "barbedWire") {
+			if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
+				Destroy (col.gameObject);
+			}
 		}
 	}
 }

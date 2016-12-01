@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
 
-	public GameObject landmine;
-
 	//Info text
 	public Text healthText;
 	public Text killedText;
@@ -71,13 +69,27 @@ public class GameManager : MonoBehaviour {
 	public float timeSurvived;
 	public int numKilled;
 
+	//floating placing values
+	public GameObject landmine;
+	public GameObject barbedWire;
+	private bool placing = false;
+	private bool spawned = false;
+	private landmineHandler currentObjMine;
+	private barbedWireHandler currentObjBarb;
+	private int placeSelect = 0;
+
+	//UI placeable toggles
+	public GameObject mineSprite;
+	public GameObject mineSprite2;
+	public GameObject barbedSprite;
+	public GameObject barbedSprite2;
 
 	// Use this for initialization
 	void Start () {
 		Instance = this;
 		//turretFireRate = turretHandler.Instance.bulletDelay;
 
-
+		//INITIAL SET OF UI WEAPON SPRITES
 		rifleWep = GameObject.Find ("rifleImage");
 		shotgunWep = GameObject.Find ("shotgunImage");
 		launcherWep = GameObject.Find ("launcherImage");
@@ -89,6 +101,12 @@ public class GameManager : MonoBehaviour {
 		rifleWep2.SetActive (true);
 		shotgunWep2.SetActive (false);
 		launcherWep2.SetActive (false);
+
+		//INITIAL SET OF UI PLACEABLE SPRITES
+		mineSprite.SetActive (false);
+		mineSprite2.SetActive (true);
+		barbedSprite.SetActive (true);
+		barbedSprite2.SetActive (false);
 	}
 
 	// Update is called once per frame
@@ -112,15 +130,94 @@ public class GameManager : MonoBehaviour {
 				isPause = false;
 			}
 		}
+		if (placing == false) {//Swaping placable objects using scrollwheel
+			if (Input.GetAxis ("Mouse ScrollWheel") > 0f) { //Mouse Scrollwheel forward
+				if (placeSelect == 0) {
+					placeSelect = 1; 
+					mineSprite.SetActive (true);
+					mineSprite2.SetActive (false);
+					barbedSprite.SetActive (false);
+					barbedSprite2.SetActive (true);
+				} else if (placeSelect == 1) {
+					placeSelect = 0;
+					mineSprite.SetActive (false);
+					mineSprite2.SetActive (true);
+					barbedSprite.SetActive (true);
+					barbedSprite2.SetActive (false);
+				}
+			
+			} else if (Input.GetAxis ("Mouse ScrollWheel") < 0f) { //Mouse scrollwheel backwards
+				if (placeSelect == 0) {
+					placeSelect = 1; 
+					mineSprite.SetActive (true);
+					mineSprite2.SetActive (false);
+					barbedSprite.SetActive (false);
+					barbedSprite2.SetActive (true);
+				} else if (placeSelect == 1) {
+					placeSelect = 0;
+					mineSprite.SetActive (false);
+					mineSprite2.SetActive (true);
+					barbedSprite.SetActive (true);
+					barbedSprite2.SetActive (false);
+				}
+			}
+		}
 
-		if (spawnEnemy.Instance.numberKilled >= 10) {
-			if (Input.GetButtonDown ("Fire2")) {
-				spawnEnemy.Instance.numberKilled -= 10;
-				Vector3 mousePos = Input.mousePosition;
-				mousePos.z = 0.0f;
-				Vector3 objectPos = Camera.main.ScreenToWorldPoint (mousePos);
-				objectPos.z = 0.0f;
-				GameObject shot = GameObject.Instantiate (landmine, objectPos, transform.rotation) as GameObject;
+		if (Time.timeScale != 0) {//Placing mine/barbed wire script
+			if (spawnEnemy.Instance.numberKilled >= 10) {
+				if (Input.GetButtonDown ("Fire2")) {
+					if (placing == false) {
+						placing = true;
+					} else if (placing == true) {
+						if (placeSelect == 0) {
+							currentObjMine.GetComponent<landmineHandler> ().prePlace = false;//renabling explosion
+							currentObjMine = null;//reseting current object
+						} else if (placeSelect == 1) {
+							currentObjBarb.GetComponent<barbedWireHandler> ().prePlace = false;
+							currentObjBarb = null;//reseting current object
+						}
+						placing = false;
+						spawned = false;
+					}
+				}
+			}
+		}
+		if (placing == true) {
+			if (spawned == false) {//initial spawn of object
+				if (placeSelect == 0) {//spawing mine
+					spawnEnemy.Instance.numberKilled -= 10;
+					Vector3 mousePos = Input.mousePosition;
+					mousePos.z = 0.0f;
+					Vector3 objectPos = Camera.main.ScreenToWorldPoint (mousePos);
+					objectPos.z = 0.0f;
+					landmineHandler obj = ((GameObject)Instantiate (landmine, transform.position, transform.rotation)).GetComponent<landmineHandler> ();
+					obj.prePlace = true;//disabling explosion in the mine
+					currentObjMine = obj;
+					spawned = true;
+				} else if (placeSelect == 1) {//spawning wire
+					spawnEnemy.Instance.numberKilled -= 10;
+					Vector3 mousePos = Input.mousePosition;
+					mousePos.z = 0.0f;
+					Vector3 objectPos = Camera.main.ScreenToWorldPoint (mousePos);
+					objectPos.z = 0.0f;
+					barbedWireHandler obj = ((GameObject)Instantiate (barbedWire, transform.position, transform.rotation)).GetComponent<barbedWireHandler> ();
+					obj.prePlace = true; //disabling collision effects
+					currentObjBarb = obj;
+					spawned = true;
+				}
+			}
+			if (placeSelect == 0) {//Keeping the mine in allignment with cursor
+				Vector3 mousePosCur = Input.mousePosition;
+				mousePosCur.z = 0.0f;
+				Vector3 objectPosCur = Camera.main.ScreenToWorldPoint (mousePosCur);
+				objectPosCur.z = 0.0f;
+				currentObjMine.transform.position = objectPosCur;
+			} else if (placeSelect == 1) {//Keeping the wire in allignment with cursor
+				Vector3 mousePosCur = Input.mousePosition;
+				mousePosCur.z = 0.0f;
+				Vector3 objectPosCur = Camera.main.ScreenToWorldPoint (mousePosCur);
+				objectPosCur.z = 0.0f;
+				currentObjBarb.transform.position = objectPosCur;
 			}
 		}
 

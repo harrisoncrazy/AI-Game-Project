@@ -142,6 +142,10 @@ public class minonHandler : MonoBehaviour {
 			reachedDest = true;
 		} else if (col.gameObject.tag == "Bullet") {
 			Destroy (this.gameObject);
+		} else if (col.gameObject.tag == "barbedWire") {
+			if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
+				moveSpeed = moveSpeed / 2;
+			}
 		}
 	}
 		
@@ -159,13 +163,16 @@ public class minonHandler : MonoBehaviour {
 					timer -= Time.deltaTime;
 				}
 			}
-			/*if (rando == col.gameObject.transform.GetComponent<minonHandler>().rando && col != null) {//checking to see if the colliding minions will be moving in the same direction, if so one minion should swap to a new move direction
-				if (rando == 2) {
-					transform.position += transform.right * Time.deltaTime;
-				} else if (rando == 1) {
-					transform.position -= transform.right * Time.deltaTime;
-				}
-			}*/
+		}
+	
+	}
+
+
+	void OnTriggerExit2D (Collider2D col) {
+		if (col.gameObject.tag == "barbedWire") {
+			if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
+				moveSpeed = moveSpeed * 2;
+			}
 		}
 	}
 }
