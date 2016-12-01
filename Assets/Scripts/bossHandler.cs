@@ -103,6 +103,7 @@ public class bossHandler : MonoBehaviour {
 			}
 			spawnEnemy.Instance.isBossSpawned = false;
 			spawnEnemy.Instance.numberKilled += 25;
+			GameManager.Instance.numKilled++;
 			Destroy (this.gameObject);
 		}
 

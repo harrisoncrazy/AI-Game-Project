@@ -13,7 +13,7 @@ public class spawnEnemy : MonoBehaviour {
 	private float timerSet = 3f;
 	private float realTimer;
 	public float maxEnemies = 10;
-	public Transform player;
+	private Transform player;
 	public float spawnNumber = 0;
 	public float numberKilled = 0;
 
@@ -36,7 +36,7 @@ public class spawnEnemy : MonoBehaviour {
 	public Transform lieutenantRotPoint;
 	private float LtimerSet = 10f;
 	private float realLTimer;
-	public float maxLieutenants = 2;
+	private float maxLieutenants = 2;
 	public float spawnedLNum = 0;
 	private int spawnedPos;
 
@@ -47,10 +47,11 @@ public class spawnEnemy : MonoBehaviour {
 	private float realBossTimer;
 
 	//Dificulty values
-	private float timeActive;
+	public float timeActive;
 	private bool minIncr = false;
 	private bool twominIncr = false;
 	private bool threeminIncr = false;
+	private bool fiveminIncr = false;
 
 	private bool checkfornewPlayer;
 
@@ -75,7 +76,7 @@ public class spawnEnemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//INCREASING DIFFICULTY AS TIME GOES ON
-		timeActive = GameManager.Instance.timeSurvived;
+		timeActive = 300;//GameManager.Instance.timeSurvived;
 		//Starting with a minion spawing every 3 seconds, up to 10
 		//Starting with lieutenant spawning every 10 seconds, up to 2 
 		//Starting with boss spawing every 60 seconds
@@ -128,6 +129,23 @@ public class spawnEnemy : MonoBehaviour {
 				//Moving to minion spawing every half second, up to 32 + 4 from boss
 				//Moving to lieutenatn spawing 2.5 seconds, up to 8 (no effect?)
 				//boss timer down to 15
+			}
+		}
+
+		//after 5 min
+		if (timeActive >= 300) {
+			if (fiveminIncr == false) {
+				timerSet = 0.4f;
+				maxEnemies += 5;
+
+				LtimerSet = 2f;
+				maxLieutenants += 2;
+
+				bossTimerSet = 10f;
+				fiveminIncr = true;
+				//Moving to minion spawing every quarter second, up to 41 + 6 from boss
+				//Moving to lieutenant spawing 1.5 seconds, up to 10 (no effect?)
+				//boss timer down to 10
 			}
 		}
 
