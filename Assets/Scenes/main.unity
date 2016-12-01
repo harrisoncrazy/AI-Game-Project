@@ -855,6 +855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe96e349515566d479c3d4c718093e17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  landmine: {fileID: 1000013303063926, guid: c0577c963539d6247abb0a0f8907a5a6, type: 2}
   healthText: {fileID: 997185559}
   killedText: {fileID: 617775891}
   fireRateText: {fileID: 993347360}
@@ -3443,7 +3444,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 5.408767
+  m_Radius: 3.725141
 --- !u!50 &1176904601
 Rigidbody2D:
   serializedVersion: 2

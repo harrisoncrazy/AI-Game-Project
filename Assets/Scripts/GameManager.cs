@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour {
 
 	public static GameManager Instance;
 
+	public GameObject landmine;
+
 	//Info text
 	public Text healthText;
 	public Text killedText;
@@ -110,6 +112,18 @@ public class GameManager : MonoBehaviour {
 				isPause = false;
 			}
 		}
+
+		if (spawnEnemy.Instance.numberKilled >= 10) {
+			if (Input.GetButtonDown ("Fire2")) {
+				spawnEnemy.Instance.numberKilled -= 10;
+				Vector3 mousePos = Input.mousePosition;
+				mousePos.z = 0.0f;
+				Vector3 objectPos = Camera.main.ScreenToWorldPoint (mousePos);
+				objectPos.z = 0.0f;
+				GameObject shot = GameObject.Instantiate (landmine, objectPos, transform.rotation) as GameObject;
+			}
+		}
+
 		if (isLeftSpawned == true) {
 			purchasedLText.text = "Already Purchased!";
 		}
