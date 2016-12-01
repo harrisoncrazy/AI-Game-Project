@@ -76,7 +76,7 @@ public class spawnEnemy : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		//INCREASING DIFFICULTY AS TIME GOES ON
-		timeActive += GameManager.Instance.timeSurvived;
+		timeActive = GameManager.Instance.timeSurvived;
 		//Starting with a minion spawing every 3 seconds, up to 10
 		//Starting with lieutenant spawning every 10 seconds, up to 2 
 		//Starting with boss spawing every 60 seconds

@@ -520,7 +520,7 @@ Prefab:
     - target: {fileID: 114000011702524790, guid: 5605b42d06515044fa2828bb6afe2c08,
         type: 2}
       propertyPath: health
-      value: 1000
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5605b42d06515044fa2828bb6afe2c08, type: 2}
@@ -1649,11 +1649,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519284101}
---- !u!4 &523132825 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4000013795240456, guid: 5605b42d06515044fa2828bb6afe2c08,
-    type: 2}
-  m_PrefabInternal: {fileID: 117290990}
 --- !u!1 &529652094
 GameObject:
   m_ObjectHideFlags: 0
@@ -2617,7 +2612,6 @@ MonoBehaviour:
   spawnPos: {x: 0, y: 0}
   minonEnemy: {fileID: 1000011903267730, guid: 3ad32012e5722ce48bcc1ff449870b87, type: 2}
   maxEnemies: 10
-  player: {fileID: 523132825}
   spawnNumber: 0
   numberKilled: 0
   lieutenantEnemy: {fileID: 158140, guid: 7c7f6f41fa0f44540a51d642bc0b1dfc, type: 2}
@@ -2634,10 +2628,10 @@ MonoBehaviour:
   Lspawn5Disabled: 0
   Lspawn6Disabled: 0
   lieutenantRotPoint: {fileID: 164955580}
-  maxLieutenants: 5
   spawnedLNum: 0
   bossEnemy: {fileID: 175724, guid: f7f4ad1aeac809744a2ca4f86b43efdf, type: 2}
   isBossSpawned: 0
+  timeActive: 0
   lieutenantPoints: []
 --- !u!4 &756730336
 Transform:
