@@ -93,8 +93,12 @@ public class bossHandler : MonoBehaviour {
 		} else if (healthVal == 1) {
 			bar.sprite = health1;
 		} else if (healthVal <= 0) {
-			Destroy (this.gameObject);
+			GameObject.Find ("rightMinion").GetComponent<minonHandler> ().isWithBoss = false;
+			GameObject.Find ("leftMinion").GetComponent<minonHandler> ().isWithBoss = false;
+			GameObject.Find ("rightMinion").GetComponent<minonHandler> ().moveSpeed = 1;
+			GameObject.Find ("leftMinion").GetComponent<minonHandler> ().moveSpeed = 1;
 			spawnEnemy.Instance.isBossSpawned = false;
+			Destroy (this.gameObject);
 		}
 
 		if (Mathf.Round(transform.position.x) == xVal && Mathf.Round(transform.position.y) == yVal) {//stopping the wander

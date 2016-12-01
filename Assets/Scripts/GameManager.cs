@@ -42,12 +42,14 @@ public class GameManager : MonoBehaviour {
 	public float turretFireRate;
 
 	//Left AI turret values
+	public GameObject leftAITurret;
 	public float fireRateL = 3;
 	public float upgradeCapL = 15;
 	public Text purchasedLText;
 	public Text upgradedLText;
 
 	//Right AI turret values
+	public GameObject rightAITurret;
 	public float fireRateR = 3;
 	public float upgradeCapR = 15;
 	public Text purchasedRText;
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Instance = this;
-		turretFireRate = turretHandler.Instance.bulletDelay;
+		//turretFireRate = turretHandler.Instance.bulletDelay;
 
 
 		rifleWep = GameObject.Find ("rifleImage");
@@ -138,6 +140,7 @@ public class GameManager : MonoBehaviour {
 				spawnEnemy.Instance.numberKilled -= 100;
 				health = turretHandler.Instance.health;
 				location = turretHandler.Instance.transform;
+				turretFireRate = turretHandler.Instance.bulletDelay;
 
 				//Toggling all weapon images on
 				rifleWep.SetActive (true);
@@ -193,6 +196,8 @@ public class GameManager : MonoBehaviour {
 			if (spawnEnemy.Instance.numberKilled >= 100) {
 				spawnEnemy.Instance.numberKilled -= 100;
 				AITurretHandler AITurret = ((GameObject)Instantiate (turretAI, turretAILeft.position, turretAILeft.rotation)).GetComponent<AITurretHandler> ();
+				AITurret.isLeft = true;
+				leftAITurret = AITurret.gameObject;
 				isLeftSpawned = true;
 			}
 		} else {
@@ -218,6 +223,8 @@ public class GameManager : MonoBehaviour {
 			if (spawnEnemy.Instance.numberKilled >= 100) {
 				spawnEnemy.Instance.numberKilled -= 100;
 				AITurretHandler AITurret = ((GameObject)Instantiate (turretAI, turretAIRight.position, turretAIRight.rotation)).GetComponent<AITurretHandler> ();
+				AITurret.isLeft = false;
+				rightAITurret = AITurret.gameObject;
 				isRightSpawned = true;
 			}
 		} else {
@@ -237,6 +244,32 @@ public class GameManager : MonoBehaviour {
 			upgradedRText.text = "Max Upgrade Reached!";
 		}
 	}
+
+	public void AIdefaultSwap() {
+		leftAITurret.GetComponent<AITurretHandler> ().defaultMode = true;
+		leftAITurret.GetComponent<AITurretHandler> ().bossMode = false;
+		leftAITurret.GetComponent<AITurretHandler> ().lieutenantMode = false;
+		rightAITurret.GetComponent<AITurretHandler> ().defaultMode = true;
+		rightAITurret.GetComponent<AITurretHandler> ().bossMode = false;
+		rightAITurret.GetComponent<AITurretHandler> ().lieutenantMode = false;
+	}
+	public void AIbossSwap() {
+		leftAITurret.GetComponent<AITurretHandler> ().defaultMode = false;
+		leftAITurret.GetComponent<AITurretHandler> ().bossMode = true;
+		leftAITurret.GetComponent<AITurretHandler> ().lieutenantMode = false;
+		rightAITurret.GetComponent<AITurretHandler> ().defaultMode = false;
+		rightAITurret.GetComponent<AITurretHandler> ().bossMode = true;
+		rightAITurret.GetComponent<AITurretHandler> ().lieutenantMode = false;
+	}
+	public void AIlieutenantSwap() {
+		leftAITurret.GetComponent<AITurretHandler> ().defaultMode = false;
+		leftAITurret.GetComponent<AITurretHandler> ().bossMode = false;
+		leftAITurret.GetComponent<AITurretHandler> ().lieutenantMode = true;
+		rightAITurret.GetComponent<AITurretHandler> ().defaultMode = false;
+		rightAITurret.GetComponent<AITurretHandler> ().bossMode = false;
+		rightAITurret.GetComponent<AITurretHandler> ().lieutenantMode = true;
+	}
+
 
 	public void PlayerDead() {
 		deathScreen.SetActive (true);
