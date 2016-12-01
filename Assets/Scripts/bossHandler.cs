@@ -102,6 +102,7 @@ public class bossHandler : MonoBehaviour {
 				GameObject.Find ("leftMinion").GetComponent<minonHandler> ().moveSpeed = 1;
 			}
 			spawnEnemy.Instance.isBossSpawned = false;
+			spawnEnemy.Instance.numberKilled += 25;
 			Destroy (this.gameObject);
 		}
 

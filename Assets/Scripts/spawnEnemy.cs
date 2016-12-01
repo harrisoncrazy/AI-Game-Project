@@ -10,7 +10,7 @@ public class spawnEnemy : MonoBehaviour {
 
 	//Minion Stuff
 	public GameObject minonEnemy;
-	public float timerSet = 1f;
+	private float timerSet = 3f;
 	private float realTimer;
 	public float maxEnemies = 10;
 	public Transform player;
@@ -34,18 +34,23 @@ public class spawnEnemy : MonoBehaviour {
 
 	private Transform LspawnPos;
 	public Transform lieutenantRotPoint;
-	public float LtimerSet = 5f;
+	private float LtimerSet = 10f;
 	private float realLTimer;
-	public float maxLieutenants = 4;
+	public float maxLieutenants = 2;
 	public float spawnedLNum = 0;
 	private int spawnedPos;
 
 	//Boss Stuff
 	public GameObject bossEnemy;
 	public bool isBossSpawned = false;
-	public float bossTimerSet = 15f;
+	private float bossTimerSet = 60f;
 	private float realBossTimer;
 
+	//Dificulty values
+	private float timeActive;
+	private bool minIncr = false;
+	private bool twominIncr = false;
+	private bool threeminIncr = false;
 
 	private bool checkfornewPlayer;
 
@@ -69,6 +74,63 @@ public class spawnEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//INCREASING DIFFICULTY AS TIME GOES ON
+		timeActive = GameManager.Instance.timeSurvived;
+		//Starting with a minion spawing every 3 seconds, up to 10
+		//Starting with lieutenant spawning every 10 seconds, up to 2 
+		//Starting with boss spawing every 60 seconds
+
+		//After 1 min
+		if (timeActive >= 60f) {
+			if (minIncr == false) {
+				timerSet = 2f;
+				maxEnemies += 3;
+
+				LtimerSet = 8f;
+				maxLieutenants += 2;
+
+				bossTimerSet = 45f;
+				minIncr = true;
+				//Moving to minion spawing 2 seconds, up to 13 + 2 from boss
+				//moving to liutenant spawing 8 seconds up to 4
+				//boss timer down to 45
+			}
+		}
+
+		//after 2 min
+		if (timeActive >= 120) {
+			if (twominIncr == false) {
+				timerSet = 1f;
+				maxEnemies += 5;
+
+				LtimerSet = 5f;
+				maxLieutenants += 2;
+
+				bossTimerSet = 30f;
+				twominIncr = true;
+				//Moving to minion spawing every second, up to 25 + 2 from boss
+				//Moving to lieutenatn spawing 5 seconds, up to 6 (max)
+				//boss timer down to 30
+			}
+		}
+
+		//after 3 min
+		if (timeActive >= 180) {
+			if (threeminIncr == false) {
+				timerSet = 0.5f;
+				maxEnemies += 5;
+
+				LtimerSet = 2.5f;
+				maxLieutenants += 2;
+
+				bossTimerSet = 15f;
+				threeminIncr = true;
+				//Moving to minion spawing every half second, up to 32 + 4 from boss
+				//Moving to lieutenatn spawing 2.5 seconds, up to 8 (no effect?)
+				//boss timer down to 15
+			}
+		}
+
 		if (player == null) {
 			if (checkfornewPlayer == false) {
 				checkfornewPlayer = true;
