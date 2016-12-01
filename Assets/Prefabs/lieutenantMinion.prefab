@@ -61,7 +61,7 @@ MonoBehaviour:
     type: 2}
   barrelEnd: {fileID: 4000013918486292}
   lookLocation: {fileID: 0}
-  moveSpeed: 0.5
+  moveSpeed: 1
   spawnedPos: 0
   leftMove: 0
   moveSwapTimer: 3

@@ -164,23 +164,27 @@ public class GameManager : MonoBehaviour {
 		}
 
 		if (Time.timeScale != 0) {//Placing mine/barbed wire script
-			if (spawnEnemy.Instance.numberKilled >= 10) {
-				if (Input.GetButtonDown ("Fire2")) {
-					if (placing == false) {
+
+			if (Input.GetButtonDown ("Fire2")) {
+				if (placing == false) {
+					if (placeSelect == 0 && spawnEnemy.Instance.numberKilled >= 10) {
 						placing = true;
-					} else if (placing == true) {
-						if (placeSelect == 0) {
-							currentObjMine.GetComponent<landmineHandler> ().prePlace = false;//renabling explosion
-							currentObjMine = null;//reseting current object
-						} else if (placeSelect == 1) {
-							currentObjBarb.GetComponent<barbedWireHandler> ().prePlace = false;
-							currentObjBarb = null;//reseting current object
-						}
-						placing = false;
-						spawned = false;
+					} else if (placeSelect == 1 && spawnEnemy.Instance.numberKilled >= 50) {
+						placing = true;
 					}
+				} else if (placing == true) {
+					if (placeSelect == 0) {
+						currentObjMine.GetComponent<landmineHandler> ().prePlace = false;//renabling explosion
+						currentObjMine = null;//reseting current object
+					} else if (placeSelect == 1) {
+						currentObjBarb.GetComponent<barbedWireHandler> ().prePlace = false;
+						currentObjBarb = null;//reseting current object
+					}
+					placing = false;
+					spawned = false;
 				}
 			}
+
 		}
 		if (placing == true) {
 			if (spawned == false) {//initial spawn of object
@@ -195,7 +199,7 @@ public class GameManager : MonoBehaviour {
 					currentObjMine = obj;
 					spawned = true;
 				} else if (placeSelect == 1) {//spawning wire
-					spawnEnemy.Instance.numberKilled -= 10;
+					spawnEnemy.Instance.numberKilled -= 50;
 					Vector3 mousePos = Input.mousePosition;
 					mousePos.z = 0.0f;
 					Vector3 objectPos = Camera.main.ScreenToWorldPoint (mousePos);
