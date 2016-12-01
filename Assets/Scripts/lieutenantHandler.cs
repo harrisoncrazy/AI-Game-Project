@@ -31,6 +31,8 @@ public class lieutenantHandler : MonoBehaviour {
 
 	private bool slowed = false;
 
+	private bool checkfornewPlayer = false;
+
 	// Use this for initialization
 	void Start () {
 		lookLocation = GameObject.FindWithTag ("LPos").transform;
@@ -39,6 +41,13 @@ public class lieutenantHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (lookLocation == null) {//checking for null player
+			if (checkfornewPlayer == false) {
+				checkfornewPlayer = true;
+				lookLocation = GameObject.FindWithTag ("Player").transform;
+			}
+		}
+
 		if (Mathf.Round(transform.position.x) == xVal && Mathf.Round(transform.position.y) == yVal) {//stopping the wander
 			moveSpeed = 0;
 			wandering = false;
