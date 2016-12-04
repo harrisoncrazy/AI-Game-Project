@@ -3,15 +3,15 @@ using System.Collections;
 
 public class lieutenantHandler : MonoBehaviour {
 
-	public GameObject enemyBullet;
+	public GameObject enemyBullet; //Fired Bullet
 
-	public Transform barrelEnd;
+	public Transform barrelEnd; //End of the barrel, where the bullets are instanciated
 
-	public Transform lookLocation;
+	public Transform lookLocation; //Original look location, set way behind the player so as to not move with the player
 
-	public float moveSpeed = 0.5f;
+	public float moveSpeed = 0.5f; //Movespeed, what are you dumb?
 
-	public int spawnedPos;
+	public int spawnedPos; //the number in the array of points that the guy is spawned at
 
 	public bool leftMove;
 	public float moveSwapTimer = 3;
@@ -33,26 +33,27 @@ public class lieutenantHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		lookLocation = GameObject.FindWithTag ("LPos").transform;
-		StartCoroutine ("stopMoving");
+		lookLocation = GameObject.FindWithTag ("LPos").transform; //the original point to move towards
+		StartCoroutine ("stopMoving"); //starting the countdown to stopping the original move
 	}
 	
-	// Update is called once per frame
+	//So what this does is, the lieutenant spawns at one of the 6 selected points, then moves towards the player stopping after a set amount of seconds
+	//then the guy goes into firing mode, firing a burst of 3 bullets, then selecting a randomized wanderpoint, heading towards it, stopping then firing again, etc etc
 	void Update () {
-		if (Mathf.Round(transform.position.x) == xVal && Mathf.Round(transform.position.y) == yVal) {//stopping the wander
+		if (Mathf.Round(transform.position.x) == xVal && Mathf.Round(transform.position.y) == yVal) {//stopping the wander when it reaches the destination NEEDS TO BE ROUNDED OR IT WONT "ACTUALLY" reach the specific point
 			moveSpeed = 0;
 			wandering = false;
 		}
 
-		if (wandering == true) {
-			transform.LookAt (transform.position + new Vector3 (0, 0, 1), wanderPoint - transform.position); //Rotating towards the player
+		if (wandering == true) {//bool for wandering, and not wandering
+			transform.LookAt (transform.position + new Vector3 (0, 0, 1), wanderPoint - transform.position); //Rotating towards wanderpoint
 			transform.position += transform.up * Time.deltaTime * moveSpeed; //moving forward
 		} else if (wandering == false) {
 			transform.LookAt (transform.position + new Vector3 (0, 0, 1), lookLocation.transform.position - transform.position); //Rotating towards the player
 			transform.position += transform.up * Time.deltaTime * moveSpeed; //moving forward
 		}
 
-		if (spawnedPos == 1) {
+		if (spawnedPos == 1) {//array of lieutenant spaws stored in a seperate spawning script, enabled or disabled as they spawn
 			spawnEnemy.Instance.Lspawn1Disabled = true;
 		} else if (spawnedPos == 2) {
 			spawnEnemy.Instance.Lspawn2Disabled = true;
@@ -70,10 +71,10 @@ public class lieutenantHandler : MonoBehaviour {
 			if (wandering == false) {
 				timer -= Time.deltaTime;
 				if (timer < 0) {
-					lookLocation = GameObject.FindWithTag ("Player").transform;
-					timer = Random.Range (1, 5);
+					lookLocation = GameObject.FindWithTag ("Player").transform;//looks at player to fire
+					timer = Random.Range (1, 5);//new firing cooldown
 					startingFire = true;
-					StartCoroutine("selectWanderPoint");
+					StartCoroutine("selectWanderPoint");//new wanderpoint
 				}
 			}
 		}
@@ -89,7 +90,7 @@ public class lieutenantHandler : MonoBehaviour {
 				lookLocation = GameObject.FindWithTag ("Player").transform;
 				fireBullet ();//fire bullet
 				burstNum++;
-				timer2 = .1f;
+				timer2 = .1f;//toggling this code segment on and off 3 times in quick sucession
 			}
 		} else if (burstNum >= 3) { //ending fire sequence
 			startingFire = false;
@@ -105,7 +106,7 @@ public class lieutenantHandler : MonoBehaviour {
 		wandering = true;
 		//Debug.Log (xVal);
 		//Debug.Log (yVal);
-		wanderPoint = new Vector3(xVal, yVal, 1);
+		wanderPoint = new Vector3(xVal, yVal, 1);//setting the vector 3 wander point
 	}
 
 	void fireBullet() {
@@ -139,9 +140,9 @@ public class lieutenantHandler : MonoBehaviour {
 			Destroy (col.gameObject);
 			Destroy (this.gameObject);
 		}
-		else if (col.gameObject.tag == "barbedWire") {
+		else if (col.gameObject.tag == "barbedWire") { //slowing down in barbed wire
 			if (slowed == false) {
-				if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
+				if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {//making sure the wire isnt in preplacemode as to not prematurily interact
 					moveSpeed = moveSpeed / 2;
 					slowed = true;
 				}
@@ -150,7 +151,7 @@ public class lieutenantHandler : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D (Collider2D col) {
-		if (col.gameObject.tag == "barbedWire") {
+		if (col.gameObject.tag == "barbedWire") { //speeding up after leaving wire
 			if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
 				moveSpeed = moveSpeed * 2;
 				slowed = false;

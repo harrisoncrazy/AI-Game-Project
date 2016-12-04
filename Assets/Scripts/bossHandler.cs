@@ -3,12 +3,12 @@ using System.Collections;
 
 public class bossHandler : MonoBehaviour {
 
-	public GameObject enemyShell;
-	public GameObject enemyBullet;
+	public GameObject enemyShell; //explosive enemy shell
+	public GameObject enemyBullet;//enemy bullet
 
-	public GameObject minionPref;
+	public GameObject minionPref; //minion prefab, to spawn the two side by side minons
 
-	public Transform barrelEnd;
+	public Transform barrelEnd; //end of barrel
 
 	public Transform lookLocation;
 
@@ -47,23 +47,21 @@ public class bossHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		minonHandler minionLeft = ((GameObject)Instantiate (minionPref, new Vector3(transform.position.x + 2f, transform.position.y, transform.position.z), transform.rotation)).GetComponent<minonHandler> ();
-		minionLeft.leftBoss = true;
-		minionLeft.isWithBoss = true;
-		minionLeft.name = "leftMinion";
-		minonHandler minionRight = ((GameObject)Instantiate (minionPref, new Vector3(transform.position.x - 2f, transform.position.y, transform.position.z), transform.rotation)).GetComponent<minonHandler> ();
+		minonHandler minionLeft = ((GameObject)Instantiate (minionPref, new Vector3(transform.position.x + 2f, transform.position.y, transform.position.z), transform.rotation)).GetComponent<minonHandler> ();//spawing left minion
+		minionLeft.leftBoss = true; //setting a bool on the minion to true
+		minionLeft.isWithBoss = true; //a bool that indicates weahter or not the minion is in range to the boss
+		minionLeft.name = "leftMinion"; //setting minion name
+		minonHandler minionRight = ((GameObject)Instantiate (minionPref, new Vector3(transform.position.x - 2f, transform.position.y, transform.position.z), transform.rotation)).GetComponent<minonHandler> ();//spawing right minion
 		minionRight.leftBoss = false;
 		minionRight.isWithBoss = true;
 		minionRight.name = "rightMinion";
 
-		spawnEnemy.Instance.spawnNumber += 2;
+		spawnEnemy.Instance.spawnNumber += 2;//increasing spawn amount on seperate spawn manager
 		spawnEnemy.Instance.maxEnemies += 2;
 
-		bar = healthbar.GetComponent<SpriteRenderer>();
-		lookLocation = GameObject.FindWithTag ("LPos").transform;
-		healthLook = GameObject.FindWithTag ("LookLoc").transform;
-
-
+		bar = healthbar.GetComponent<SpriteRenderer>();//health bar component, rendered as a sprite above the tank
+		lookLocation = GameObject.FindWithTag ("LPos").transform; //moving straight at the player
+		healthLook = GameObject.FindWithTag ("LookLoc").transform;//far set health look location to orient the bar in the same direction for the whole time
 	}
 	
 	// Update is called once per frame
@@ -74,7 +72,7 @@ public class bossHandler : MonoBehaviour {
 
 		if (healthVal == 10) {//Health bar values
 
-		} else if (healthVal == 9) {
+		} else if (healthVal == 9) {//setting the health bar to the new lowered sprite when health is removed
 			bar.sprite = health9;
 		} else if (healthVal == 8) {
 			bar.sprite = health8;
@@ -92,8 +90,8 @@ public class bossHandler : MonoBehaviour {
 			bar.sprite = health2;
 		} else if (healthVal == 1) {
 			bar.sprite = health1;
-		} else if (healthVal <= 0) {
-			if (GameObject.Find ("rightMinion") != null) {
+		} else if (healthVal <= 0) {//when the boss dies
+			if (GameObject.Find ("rightMinion") != null) {//seeing if paired minions are still alive, and reseting them to normal minion if they are
 				GameObject.Find ("rightMinion").GetComponent<minonHandler> ().isWithBoss = false;
 				GameObject.Find ("rightMinion").GetComponent<minonHandler> ().moveSpeed = 1;
 			}
@@ -101,8 +99,8 @@ public class bossHandler : MonoBehaviour {
 				GameObject.Find ("leftMinion").GetComponent<minonHandler> ().isWithBoss = false;
 				GameObject.Find ("leftMinion").GetComponent<minonHandler> ().moveSpeed = 1;
 			}
-			spawnEnemy.Instance.isBossSpawned = false;
-			spawnEnemy.Instance.numberKilled += 25;
+			spawnEnemy.Instance.isBossSpawned = false; //reseting spawn manager bool
+			spawnEnemy.Instance.numberKilled += 25; //adding score
 			Destroy (this.gameObject);
 		}
 
@@ -164,7 +162,7 @@ public class bossHandler : MonoBehaviour {
 	}
 
 	void BurstFire() {
-		if (burstNum <= 7) { //if bullets fired less than 3
+		if (burstNum <= 7) { //if bullets fired less than 7
 			timer2 -= Time.deltaTime;
 			if (timer2 < 0) { 
 				lookLocation = GameObject.FindWithTag ("Player").transform;
@@ -189,7 +187,7 @@ public class bossHandler : MonoBehaviour {
 		shot.isEnemyBull = true;
 	}
 
-	IEnumerator selectWanderPoint() { //Lieutenant picking a random location to wander to fire at the player, within the constraints of x -5 to 5 and y 3, -1
+	IEnumerator selectWanderPoint() { //picking a random location to wander to fire at the player, within the constraints of x -5 to 5 and y 3, -1
 		yield return new WaitForSeconds (0.75f);
 		xVal = Random.Range(-5, 6);
 		yVal = Random.Range (3, 5);
@@ -203,7 +201,7 @@ public class bossHandler : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D col) {
 		if (col.gameObject.tag == "Bullet") {
 			healthVal--;
-		} else if (col.gameObject.tag == "barbedWire") {
+		} else if (col.gameObject.tag == "barbedWire") {//destroying any collided barbedwire
 			if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
 				Destroy (col.gameObject);
 			}
