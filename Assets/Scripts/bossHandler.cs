@@ -105,9 +105,12 @@ public class bossHandler : MonoBehaviour {
 =======
 			spawnEnemy.Instance.isBossSpawned = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			spawnEnemy.Instance.numberKilled += 25;
 			GameManager.Instance.numKilled++;
 >>>>>>> origin/master
+=======
+>>>>>>> parent of f04295c... making it actually a game
 =======
 >>>>>>> parent of f04295c... making it actually a game
 			Destroy (this.gameObject);

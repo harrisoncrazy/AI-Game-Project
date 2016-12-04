@@ -37,7 +37,11 @@ public class spawnEnemy : MonoBehaviour {
 	public float LtimerSet = 5f;
 	private float realLTimer;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private float maxLieutenants = 2;
+=======
+	public float maxLieutenants = 4;
+>>>>>>> parent of f04295c... making it actually a game
 =======
 	public float maxLieutenants = 4;
 >>>>>>> parent of f04295c... making it actually a game
@@ -51,12 +55,15 @@ public class spawnEnemy : MonoBehaviour {
 	private float realBossTimer;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//Dificulty values
 	public float timeActive;
 	private bool minIncr = false;
 	private bool twominIncr = false;
 	private bool threeminIncr = false;
 	private bool fiveminIncr = false;
+=======
+>>>>>>> parent of f04295c... making it actually a game
 =======
 >>>>>>> parent of f04295c... making it actually a game
 
@@ -82,6 +89,7 @@ public class spawnEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		//INCREASING DIFFICULTY AS TIME GOES ON
 		timeActive = GameManager.Instance.timeSurvived;
@@ -157,6 +165,8 @@ public class spawnEnemy : MonoBehaviour {
 			}
 		}
 
+=======
+>>>>>>> parent of f04295c... making it actually a game
 =======
 >>>>>>> parent of f04295c... making it actually a game
 		if (player == null) {
