@@ -10,7 +10,7 @@ public class spawnEnemy : MonoBehaviour {
 
 	//Minion Stuff
 	public GameObject minonEnemy;
-	private float timerSet = 3f;
+	public float timerSet = 1f;
 	private float realTimer;
 	public float maxEnemies = 10;
 	private Transform player;
@@ -34,24 +34,31 @@ public class spawnEnemy : MonoBehaviour {
 
 	private Transform LspawnPos;
 	public Transform lieutenantRotPoint;
-	private float LtimerSet = 10f;
+	public float LtimerSet = 5f;
 	private float realLTimer;
+<<<<<<< HEAD
 	private float maxLieutenants = 2;
+=======
+	public float maxLieutenants = 4;
+>>>>>>> parent of f04295c... making it actually a game
 	public float spawnedLNum = 0;
 	private int spawnedPos;
 
 	//Boss Stuff
 	public GameObject bossEnemy;
 	public bool isBossSpawned = false;
-	private float bossTimerSet = 60f;
+	public float bossTimerSet = 15f;
 	private float realBossTimer;
 
+<<<<<<< HEAD
 	//Dificulty values
 	public float timeActive;
 	private bool minIncr = false;
 	private bool twominIncr = false;
 	private bool threeminIncr = false;
 	private bool fiveminIncr = false;
+=======
+>>>>>>> parent of f04295c... making it actually a game
 
 	private bool checkfornewPlayer;
 
@@ -75,6 +82,7 @@ public class spawnEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 		//INCREASING DIFFICULTY AS TIME GOES ON
 		timeActive = GameManager.Instance.timeSurvived;
 		//Starting with a minion spawing every 3 seconds, up to 10
@@ -149,6 +157,8 @@ public class spawnEnemy : MonoBehaviour {
 			}
 		}
 
+=======
+>>>>>>> parent of f04295c... making it actually a game
 		if (player == null) {
 			if (checkfornewPlayer == false) {
 				checkfornewPlayer = true;
