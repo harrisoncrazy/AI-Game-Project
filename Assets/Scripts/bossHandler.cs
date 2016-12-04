@@ -99,8 +99,14 @@ public class bossHandler : MonoBehaviour {
 				GameObject.Find ("leftMinion").GetComponent<minonHandler> ().isWithBoss = false;
 				GameObject.Find ("leftMinion").GetComponent<minonHandler> ().moveSpeed = 1;
 			}
+<<<<<<< HEAD
 			spawnEnemy.Instance.isBossSpawned = false; //reseting spawn manager bool
 			spawnEnemy.Instance.numberKilled += 25; //adding score
+=======
+			spawnEnemy.Instance.isBossSpawned = false;
+			spawnEnemy.Instance.numberKilled += 25;
+			GameManager.Instance.numKilled++;
+>>>>>>> origin/master
 			Destroy (this.gameObject);
 		}
 

@@ -14,8 +14,8 @@ public class minonHandler : MonoBehaviour {
 	public Transform rightLook;
 	private bool reachedDest = false;
 
- 	public float moveSpeed = 1;
-	private float timer = 3;
+ 	public float moveSpeed = 1.5f;
+	private float timer = 1;
 	public int rando;
 
 	//Boss Minion stuff
@@ -121,7 +121,7 @@ public class minonHandler : MonoBehaviour {
 					timer -= Time.deltaTime;//firing bullet timer
 					if (timer < 0) {
 						fireBullet ();
-						timer = Random.Range (3, 6);
+						timer = Random.Range (0, 3);
 			
 					}
 				}
