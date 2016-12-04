@@ -2624,25 +2624,16 @@ MonoBehaviour:
   Lspawn5Disabled: 0
   Lspawn6Disabled: 0
   lieutenantRotPoint: {fileID: 164955580}
-<<<<<<< HEAD
-<<<<<<< HEAD
   spawnedLNum: 0
   bossEnemy: {fileID: 175724, guid: f7f4ad1aeac809744a2ca4f86b43efdf, type: 2}
   isBossSpawned: 0
   timeActive: 0
-=======
-=======
->>>>>>> parent of f04295c... making it actually a game
   LtimerSet: 8
   maxLieutenants: 5
   spawnedLNum: 0
   bossEnemy: {fileID: 175724, guid: f7f4ad1aeac809744a2ca4f86b43efdf, type: 2}
   isBossSpawned: 0
   bossTimerSet: 25
-<<<<<<< HEAD
->>>>>>> parent of f04295c... making it actually a game
-=======
->>>>>>> parent of f04295c... making it actually a game
   lieutenantPoints: []
 --- !u!4 &756730336
 Transform:

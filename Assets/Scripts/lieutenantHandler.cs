@@ -8,12 +8,8 @@ public class lieutenantHandler : MonoBehaviour {
 	public Transform barrelEnd; //End of the barrel, where the bullets are instanciated
 
 	public Transform lookLocation; //Original look location, set way behind the player so as to not move with the player
-
-<<<<<<< HEAD
-	public float moveSpeed = 0.5f; //Movespeed, what are you dumb?
-=======
-	private float moveSpeed = 1f;
->>>>>>> origin/master
+	 
+	private float moveSpeed = 1f;//Movespeed, what are you dumb?
 
 	public int spawnedPos; //the number in the array of points that the guy is spawned at
 
@@ -46,62 +42,61 @@ public class lieutenantHandler : MonoBehaviour {
 	//So what this does is, the lieutenant spawns at one of the 6 selected points, then moves towards the player stopping after a set amount of seconds
 	//then the guy goes into firing mode, firing a burst of 3 bullets, then selecting a randomized wanderpoint, heading towards it, stopping then firing again, etc etc
 	void Update () {
-<<<<<<< HEAD
-		if (Mathf.Round(transform.position.x) == xVal && Mathf.Round(transform.position.y) == yVal) {//stopping the wander when it reaches the destination NEEDS TO BE ROUNDED OR IT WONT "ACTUALLY" reach the specific point
-=======
-		if (lookLocation == null) {//checking for null player
-			if (checkfornewPlayer == false) {
-				checkfornewPlayer = true;
-				lookLocation = GameObject.FindWithTag ("Player").transform;
-			}
-		}
 
-		if (Mathf.Round(transform.position.x) == xVal && Mathf.Round(transform.position.y) == yVal) {//stopping the wander
->>>>>>> origin/master
-			moveSpeed = 0;
-			wandering = false;
-		}
+		if (Mathf.Round (transform.position.x) == xVal && Mathf.Round (transform.position.y) == yVal) {//stopping the wander when it reaches the destination NEEDS TO BE ROUNDED OR IT WONT "ACTUALLY" reach the specific point
 
-		if (wandering == true) {//bool for wandering, and not wandering
-			transform.LookAt (transform.position + new Vector3 (0, 0, 1), wanderPoint - transform.position); //Rotating towards wanderpoint
-			transform.position += transform.up * Time.deltaTime * moveSpeed; //moving forward
-		} else if (wandering == false) {
-			transform.LookAt (transform.position + new Vector3 (0, 0, 1), lookLocation.transform.position - transform.position); //Rotating towards the player
-			transform.position += transform.up * Time.deltaTime * moveSpeed; //moving forward
-		}
-
-		if (spawnedPos == 1) {//array of lieutenant spaws stored in a seperate spawning script, enabled or disabled as they spawn
-			spawnEnemy.Instance.Lspawn1Disabled = true;
-		} else if (spawnedPos == 2) {
-			spawnEnemy.Instance.Lspawn2Disabled = true;
-		} else if (spawnedPos == 3) {
-			spawnEnemy.Instance.Lspawn3Disabled = true;
-		} else if (spawnedPos == 4) {
-			spawnEnemy.Instance.Lspawn4Disabled = true;
-		} else if (spawnedPos == 5) {
-			spawnEnemy.Instance.Lspawn5Disabled = true;
-		} else if (spawnedPos == 6) {
-			spawnEnemy.Instance.Lspawn6Disabled = true;
-		}
-
-		if (stopped == true) {//begining firing once stopped
-			if (wandering == false) {
-				timer -= Time.deltaTime;
-				if (timer < 0) {
-<<<<<<< HEAD
-					lookLocation = GameObject.FindWithTag ("Player").transform;//looks at player to fire
-					timer = Random.Range (1, 5);//new firing cooldown
-=======
+			if (lookLocation == null) {//checking for null player
+				if (checkfornewPlayer == false) {
+					checkfornewPlayer = true;
 					lookLocation = GameObject.FindWithTag ("Player").transform;
-					timer = Random.Range (1, 3);
->>>>>>> origin/master
-					startingFire = true;
-					StartCoroutine("selectWanderPoint");//new wanderpoint
 				}
 			}
-		}
-		if (startingFire == true) {
-			BurstFire ();
+
+			if (Mathf.Round (transform.position.x) == xVal && Mathf.Round (transform.position.y) == yVal) {//stopping the wander
+				moveSpeed = 0;
+				wandering = false;
+			}
+
+			if (wandering == true) {//bool for wandering, and not wandering
+				transform.LookAt (transform.position + new Vector3 (0, 0, 1), wanderPoint - transform.position); //Rotating towards wanderpoint
+				transform.position += transform.up * Time.deltaTime * moveSpeed; //moving forward
+			} else if (wandering == false) {
+				transform.LookAt (transform.position + new Vector3 (0, 0, 1), lookLocation.transform.position - transform.position); //Rotating towards the player
+				transform.position += transform.up * Time.deltaTime * moveSpeed; //moving forward
+			}
+
+			if (spawnedPos == 1) {//array of lieutenant spaws stored in a seperate spawning script, enabled or disabled as they spawn
+				spawnEnemy.Instance.Lspawn1Disabled = true;
+			} else if (spawnedPos == 2) {
+				spawnEnemy.Instance.Lspawn2Disabled = true;
+			} else if (spawnedPos == 3) {
+				spawnEnemy.Instance.Lspawn3Disabled = true;
+			} else if (spawnedPos == 4) {
+				spawnEnemy.Instance.Lspawn4Disabled = true;
+			} else if (spawnedPos == 5) {
+				spawnEnemy.Instance.Lspawn5Disabled = true;
+			} else if (spawnedPos == 6) {
+				spawnEnemy.Instance.Lspawn6Disabled = true;
+			}
+
+			if (stopped == true) {//begining firing once stopped
+				if (wandering == false) {
+					timer -= Time.deltaTime;
+					if (timer < 0) {
+
+						lookLocation = GameObject.FindWithTag ("Player").transform;//looks at player to fire
+						timer = Random.Range (1, 5);//new firing cooldown
+
+						lookLocation = GameObject.FindWithTag ("Player").transform;
+						timer = Random.Range (1, 3);
+						startingFire = true;
+						StartCoroutine ("selectWanderPoint");//new wanderpoint
+					}
+				}
+			}
+			if (startingFire == true) {
+				BurstFire ();
+			}
 		}
 	}
 
