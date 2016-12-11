@@ -9,7 +9,7 @@ public class lieutenantHandler : MonoBehaviour {
 
 	public Transform lookLocation;
 
-	public float moveSpeed = 0.5f;
+	public float moveSpeed = 1.0f;
 
 	public int spawnedPos;
 
@@ -17,7 +17,7 @@ public class lieutenantHandler : MonoBehaviour {
 	public float moveSwapTimer = 3;
 
 	//BurstFire stuff
-	public float timer = 2f;
+	private float timer = 1f;
 	private bool stopped;
 	public bool startingFire = false;
 	public int burstNum = 0;
@@ -71,7 +71,7 @@ public class lieutenantHandler : MonoBehaviour {
 				timer -= Time.deltaTime;
 				if (timer < 0) {
 					lookLocation = GameObject.FindWithTag ("Player").transform;
-					timer = Random.Range (1, 5);
+					timer = Random.Range (1, 3);
 					startingFire = true;
 					StartCoroutine("selectWanderPoint");
 				}
@@ -101,7 +101,7 @@ public class lieutenantHandler : MonoBehaviour {
 		yield return new WaitForSeconds (.75f);
 		xVal = Random.Range(-5, 6);
 		yVal = Random.Range (-1, 4);
-		moveSpeed = 0.75f;
+		moveSpeed = 1f;
 		wandering = true;
 		//Debug.Log (xVal);
 		//Debug.Log (yVal);
@@ -115,7 +115,7 @@ public class lieutenantHandler : MonoBehaviour {
 	}
 
 	IEnumerator stopMoving () { //stopping the movement after a certain amount of time
-		yield return new WaitForSeconds (9);
+		yield return new WaitForSeconds (5);
 		stopped = true;
 		moveSpeed = 0;
 	} 
@@ -142,7 +142,7 @@ public class lieutenantHandler : MonoBehaviour {
 		else if (col.gameObject.tag == "barbedWire") {
 			if (slowed == false) {
 				if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
-					moveSpeed = moveSpeed / 2;
+					moveSpeed = 0.5f;
 					slowed = true;
 				}
 			}
@@ -152,7 +152,7 @@ public class lieutenantHandler : MonoBehaviour {
 	void OnTriggerExit2D (Collider2D col) {
 		if (col.gameObject.tag == "barbedWire") {
 			if (col.gameObject.GetComponent<barbedWireHandler> ().prePlace == false) {
-				moveSpeed = moveSpeed * 2;
+				moveSpeed = 1;
 				slowed = false;
 			}
 		}

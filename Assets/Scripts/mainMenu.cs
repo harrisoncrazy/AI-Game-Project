@@ -8,7 +8,9 @@ public class mainMenu : MonoBehaviour {
 
 	public GameObject Main;
 	public GameObject HowTo;
+	public GameObject Credits;
 	public bool howToOpen = false;
+	public bool creditsOpen = false;
 
 	// changes to Level scene
 	public void LoadLevel () {
@@ -20,11 +22,27 @@ public class mainMenu : MonoBehaviour {
 		if (howToOpen == false) {
 			Main.SetActive(false);
 			HowTo.SetActive (true);
+			Credits.SetActive (false);
 			howToOpen = true;
 		} else if (howToOpen == true) {
 			Main.SetActive(true);
 			HowTo.SetActive (false);
+			Credits.SetActive (false);
 			howToOpen = false;
+		}
+	}
+
+	public void CreditsOpen () {
+		if (creditsOpen == false) {
+			Main.SetActive(false);
+			HowTo.SetActive (false);
+			Credits.SetActive (true);
+			creditsOpen = true;
+		} else if (creditsOpen == true) {
+			Main.SetActive(true);
+			HowTo.SetActive (false);
+			Credits.SetActive (false);
+			creditsOpen = false;
 		}
 	}
 

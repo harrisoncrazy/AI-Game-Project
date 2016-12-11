@@ -44,7 +44,9 @@ public class bulletHandler : MonoBehaviour {
 			//GameManager.Instance.numKilled++;
 			Destroy (this.gameObject);
 		} else if (col.gameObject.tag == "Player") {//enemy bullets hitting the player
-			Destroy (this.gameObject);
+			if (isEnemyBull == true) {
+				Destroy (this.gameObject);
+			}
 		} else if (col.gameObject.tag == "Wall") {//bullets hitting the wall
 			Destroy (this.gameObject);
 		}
